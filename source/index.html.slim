@@ -1,0 +1,59 @@
+---
+title: CSS 2.1 标准
+---
+
+.row
+  .large-12.columns.text-center
+    h4 CSS 2.1 标准
+    br/
+.row
+  .large-3.columns.show-for-large-up
+    table.pos-fixed.scroll-nav
+      tr
+        td.active
+          a href="#c-about"  关于 CSS 2.1 标准
+        td
+          a href="#c-introduction"  Css 2.1 介绍
+      tr
+        td
+          a href="#c-Annex-a"  附录 A
+        td
+          a href="#c-Annex-b"  附录 B
+
+  .large-9.columns.medium-12
+    #container.container
+
+javascript:
+  $(document).ready(function() {
+    var animate = false;
+    var active_nav =  function(){
+      $('.container h4').each(function(i, el){
+        if (animate) return;
+        if (Math.abs($(window).scrollTop() - $(el).offset().top) < 60) {
+          $('.scroll-nav td').removeClass('active');
+          $($('.scroll-nav td')[i]).addClass('active');
+        }
+      });
+    };
+    active_nav();
+
+    $('.scroll-nav td').width($('.scroll-nav').parent('.large-3').width()/2-40);
+
+    $('.scroll-nav td').on('click', function(e){
+      e.preventDefault();
+      var target = $( $(this).find('a').attr('href') );
+      $('.scroll-nav td').removeClass('active');
+      $(this).addClass('active');
+      animate = true;
+      $('html, body').animate({
+        scrollTop: target.offset().top - 50
+      }, 1000,
+      function(){
+        animate = false;
+      }
+      );
+    });
+    $(document).scroll(function(){
+      active_nav();
+    });
+  });
